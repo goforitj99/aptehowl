@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Culcom</title>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.body.style.textAlign = 'center';
+        document.body.style.marginTop = '100px';
+        document.body.style.minHeight = '100vh';
+
+        document.body.style.backgroundImage = `url('background_2.jpg')`;
+        document.body.style.backgroundWidth = '100vw';
+        document.body.style.backgroundPosition = 'center top';
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundRepeat = 'no-repeat';
+
+        const wildBoar = [
+          '똥방구자슥',
+          '씹돼자슥',
+          ' 제주도흑돼',
+          '빵디자슥',
+          '똥돼자슥',
+          '똥멧돼자슥',
+          '멧주이자슥',
+          '굽주이자슥',
+          '어이쿠저섀키',
+          '토실한자슥',
+        ];
+
+        let memberList = [];
+
+        let checkingList = [];
+
+        const head = document.querySelector('div#head');
+
+        head.style.height = '60px';
+
+        const input = document.querySelector('input');
+        input.style.verticalAlign = 'middle';
+        input.style.textAlign = 'center';
+        input.style.fontWeight = 'bolder';
+        input.style.height = '50px';
+        input.style.width = '210px';
+        input.style.fontSize = '25px';
+        input.style.borderRadius = '10px';
+
+        const h2Members = document.querySelector('h2#members');
+        h2Members.style.display = 'inline-block';
+        h2Members.style.backgroundColor = 'rgba(224,255,255,0.7)'; // lightcyan #e0ffff
+        h2Members.style.paddingTop = '12px';
+        h2Members.style.paddingBottom = '12px';
+        h2Members.style.paddingLeft = '20px';
+        h2Members.style.paddingRight = '20px';
+        h2Members.style.borderRadius = '10px';
+        h2Members.style.height = '34px';
+        h2Members.textContent = `Today's Members  :  `;
+
+        const h2Style = () => {
+          h2Members.style.backgroundColor = 'rgba(224,255,255,0.7)'; // lightcyan #e0ffff
+          h2Members.style.paddingTop = '12px';
+          h2Members.style.paddingBottom = '12px';
+          h2Members.style.paddingLeft = '20px';
+          h2Members.style.paddingRight = '20px';
+          h2Members.style.borderRadius = '10px';
+        };
+
+        const addButton = document.querySelector('button#add');
+        addButton.style.verticalAlign = 'middle';
+        addButton.style.height = '60px';
+        addButton.style.width = '120px';
+        addButton.style.fontSize = '20px';
+        addButton.style.fontWeight = 'bolder';
+        addButton.style.borderRadius = '10px';
+
+        addButton.addEventListener('click', () => {
+          if (input.value !== '') {
+            memberList.push(`${input.value}`);
+            if (memberList.length > 1) {
+              h2Members.textContent = `Today's Members  :  ${memberList[0]}`;
+
+              let str = '';
+
+              for (let i = 1; i < memberList.length; i++) {
+                str += `, ${memberList[i]}`;
+              }
+
+              h2Members.textContent += str;
+
+              h2Style();
+            } else {
+              h2Members.textContent = `Today's Members  :  ${memberList[0]}`;
+
+              h2Style();
+            }
+            input.value = '';
+          } else {
+            alert('값을 입력하세요!');
+          }
+        });
+
+        const deleteButton = document.querySelector('button#delete');
+        deleteButton.style.verticalAlign = 'middle';
+        deleteButton.style.height = '60px';
+        deleteButton.style.width = '120px';
+        deleteButton.style.fontSize = '20px';
+        deleteButton.style.fontWeight = 'bolder';
+        deleteButton.style.borderRadius = '10px';
+        deleteButton.addEventListener('click', () => {
+          if (input.value !== '') {
+            if (memberList.indexOf(`${input.value}`) < 0) {
+              alert('이름을 정확히 입력하세요');
+            } else {
+              memberList.splice(memberList.indexOf(`${input.value}`), 1);
+              if (memberList.length > 0) {
+                h2Members.textContent = `Today's Members  :  ${memberList[0]}`;
+
+                let str = '';
+
+                for (let i = 1; i < memberList.length; i++) {
+                  str += `, ${memberList[i]}`;
+                }
+
+                h2Members.textContent += str;
+
+                h2Style();
+              } else {
+                h2Members.textContent = `Today's Members  :  `;
+
+                h2Style();
+              }
+              input.value = '';
+            }
+          } else {
+            if (memberList.length > 0) {
+              if (confirm('마지막 멤버를 삭제하시겠습니까?')) {
+                memberList.pop();
+                if (memberList.length === 0) {
+                  h2Members.textContent = `Today's Members  :  `;
+                } else {
+                  h2Members.textContent = `Today's Members  :  ${memberList[0]}`;
+
+                  let str = '';
+
+                  for (let i = 1; i < memberList.length; i++) {
+                    str += `, ${memberList[i]}`;
+                  }
+
+                  h2Members.textContent += str;
+                }
+                h2Style();
+              }
+            } else {
+              alert(`Today's Members 리스트가 비어있습니다.`);
+            }
+          }
+        });
+
+        const listResetButton = document.querySelector('button#listReset');
+        listResetButton.style.verticalAlign = 'middle';
+        listResetButton.style.height = '60px';
+        listResetButton.style.width = '200px';
+        listResetButton.style.fontSize = '20px';
+        listResetButton.style.fontWeight = 'bolder';
+        listResetButton.style.borderRadius = '10px';
+        listResetButton.addEventListener('click', () => {
+          memberList = [];
+          h2Members.textContent = `Today's Members  :  `;
+          // window.location.reload();
+        });
+
+        const divForDisplayMembers =
+          document.querySelector('div#displayMember');
+        divForDisplayMembers.style.marginTop = '25px';
+
+        const divForResult = document.querySelector('div#result');
+
+        const buttonForDice = document.querySelector('button#buttonForDice');
+
+        buttonForDice.style.backgroundImage = "url('dice.png')";
+        buttonForDice.style.backgroundPosition = 'center';
+        buttonForDice.style.backgroundRepeat = 'no-repeat';
+        buttonForDice.style.backgroundSize = 'contain';
+        buttonForDice.style.height = '100px';
+        buttonForDice.style.width = '100px';
+        buttonForDice.style.marginTop = '25px';
+        buttonForDice.style.marginBottom = '30px';
+        buttonForDice.style.borderRadius = '10px';
+
+        let h1Result = [];
+
+        let finalList = [];
+
+        let handlerForDice = 0;
+
+        buttonForDice.addEventListener('click', () => {
+          if (handlerForDice === 0 && 3 <= memberList.length) {
+            for (let i = 0; i < wildBoar.length; i++) {
+              setTimeout(() => {
+                h1Result[i] = document.createElement('h1');
+                h1Result[i].textContent = `${i + 1}.   ${wildBoar[i]}`;
+                h1Result[i].style.display = 'inline-block';
+                h1Result[i].style.backgroundColor = 'rgba(245,255,250,0.8)';
+                h1Result[i].style.paddingTop = '10px';
+                h1Result[i].style.paddingBottom = '10px';
+                h1Result[i].style.paddingLeft = '10px';
+                h1Result[i].style.paddingRight = '10px';
+                h1Result[i].style.marginTop = '0px';
+                h1Result[i].style.marginBottom = '10px';
+                h1Result[i].style.borderRadius = '10px';
+                h1Result[i].style.width = '250px';
+                h1Result[i].style.textAlign = 'center';
+                const br = document.createElement('br');
+                divForResult.appendChild(h1Result[i]);
+                divForResult.appendChild(br);
+              }, (i + 1) * 456);
+            }
+          } else {
+            alert(`순서를 초기화하거나 멤버를 3명 이상 입력하세요.`);
+          }
+
+          if (checkingList.length >= memberList.length) {
+            checkingList = [];
+          }
+        });
+
+        const resetButton = document.querySelector('button#reset');
+        resetButton.style.height = '60px';
+        resetButton.style.width = '150px';
+        resetButton.style.fontSize = '30px';
+        resetButton.style.fontWeight = 'bolder';
+        resetButton.style.borderRadius = '10px';
+        resetButton.addEventListener('click', () => {
+          for (let i = 0; i < 10; i++) {
+            divForResult.textContent = '';
+          }
+
+          finalList = [];
+          h1Result = [];
+          handlerForDice = 0;
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div id="head">
+      <input type="text" />
+      <button id="add">ADD</button>
+      <button id="delete">DELETE</button>
+      <button id="listReset">LIST RESET</button>
+    </div>
+
+    <div id="displayMember">
+      <h2 id="members"></h2>
+    </div>
+
+    <button id="buttonForDice"></button>
+
+    <div id="result"></div>
+
+    <br /><br />
+
+    <button id="reset">RESET</button>
+  </body>
+</html>
